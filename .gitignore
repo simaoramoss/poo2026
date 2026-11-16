@@ -1,0 +1,7 @@
+*.o
+fabrica
+fabrica.exe
+docs/
+Relatorio.xml
+Fabrica.html
+Estado.txt

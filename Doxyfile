@@ -1,0 +1,14 @@
+PROJECT_NAME           = "Gestao de Fabrica - POO 2026/2027"
+OUTPUT_DIRECTORY       = docs
+OUTPUT_LANGUAGE        = Portuguese
+INPUT                  = .
+FILE_PATTERNS          = *.h *.cpp
+RECURSIVE              = NO
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HAVE_DOT               = NO
+UML_LOOK               = YES
+CLASS_GRAPH            = YES
