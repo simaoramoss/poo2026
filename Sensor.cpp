@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Construtor: constroi a parte Dispositivo e guarda valor e limite
 Sensor::Sensor(int _id, const string &_marca, double _valor, double _limite,
                double _prob_avaria, double _x, double _y)
     : Dispositivo(_id, _marca, _prob_avaria, _x, _y), valor(_valor), limite(_limite), avariado(false)
@@ -15,11 +16,14 @@ Sensor::Sensor(int _id, const string &_marca, double _valor, double _limite,
 
 Sensor::~Sensor() {}
 
+// Igual para todos os sensores; a condicao concreta e decidida pela
+// classe filha em Condicao_Alerta() (virtual pura)
 bool Sensor::Em_Alerta() const
 {
     return !avariado && Condicao_Alerta();
 }
 
+// Escreve uma linha com os dados do sensor
 void Sensor::Mostrar(ostream &f) const
 {
     f << "SENSOR " << Get_ID() << " [" << Tipo() << "] marca=" << Get_Marca()
@@ -30,6 +34,8 @@ void Sensor::Mostrar(ostream &f) const
       << " prob_avaria=" << Get_Prob_Avaria();
 }
 
+// Factory: cria o sensor certo a partir do tipo em texto.
+// Se o XML nao trouxer LIMITE (limite < 0), usa o limite por omissao do tipo.
 Sensor *Sensor::Criar(const string &tipo, int id, const string &marca, double valor, double limite,
                       double prob_avaria, double x, double y)
 {
@@ -45,6 +51,7 @@ Sensor *Sensor::Criar(const string &tipo, int id, const string &marca, double va
     return NULL;
 }
 
+// Construtores das filhas: so passam os dados ao construtor de Sensor
 SensorLuz::SensorLuz(int _id, const string &_marca, double _valor, double _limite,
                      double _prob_avaria, double _x, double _y)
     : Sensor(_id, _marca, _valor, _limite, _prob_avaria, _x, _y)

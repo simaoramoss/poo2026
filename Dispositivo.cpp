@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// Construtor: guarda os dados comuns e garante que a probabilidade fica entre 0 e 1
 Dispositivo::Dispositivo(int _id, const string &_marca, double _prob_avaria, double _x, double _y)
     : id(_id), marca(_marca), prob_avaria(_prob_avaria), x(_x), y(_y)
 {
@@ -17,8 +18,11 @@ Dispositivo::Dispositivo(int _id, const string &_marca, double _prob_avaria, dou
         prob_avaria = 1.0;
 }
 
+// Destrutor virtual (declarado no .h): garante que o delete de um Motor*/Sensor*
+// chama tambem o destrutor da classe filha
 Dispositivo::~Dispositivo() {}
 
+// Distancia euclidiana entre dois dispositivos (sera usada nos avisos de humidade)
 double Dispositivo::Distancia(const Dispositivo &outro) const
 {
     double dx = x - outro.x;

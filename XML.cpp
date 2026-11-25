@@ -15,6 +15,8 @@ using namespace std;
 
 XMLNo::XMLNo(const string &n) : nome(n) {}
 
+// Destrutor: apaga todos os filhos (que por sua vez apagam os seus) -> a
+// arvore inteira e libertada com um unico delete da raiz
 XMLNo::~XMLNo()
 {
     for (list<XMLNo *>::iterator it = filhos.begin(); it != filhos.end(); ++it)
@@ -50,6 +52,8 @@ bool XMLNo::Tem(const string &chave) const
     return atribs.find(k) != atribs.end() || Filho(k) != NULL;
 }
 
+// Devolve o valor de uma chave: primeiro procura nos atributos (ID="1"),
+// depois nos filhos (<ID>1</ID>); se nao existir devolve def
 string XMLNo::Valor(const string &chave, const string &def) const
 {
     string k = Util::Maiusculas(chave);
@@ -172,6 +176,7 @@ bool XMLParser::Ler_Atributos(XMLNo *no)
     }
 }
 
+// Le um elemento <NOME atrib="..."> ... </NOME> e, recursivamente, os seus filhos
 XMLNo *XMLParser::Ler_Elemento()
 {
     if (Fim() || txt[pos] != '<') {
@@ -267,6 +272,7 @@ XMLNo *XMLParser::Ler_Texto(const string &texto, string &erro)
     return raiz;
 }
 
+// Le o ficheiro todo para uma string e analisa-a
 XMLNo *XMLParser::Ler_Ficheiro(const string &ficheiro, string &erro)
 {
     ifstream f(ficheiro.c_str(), ios::in | ios::binary);

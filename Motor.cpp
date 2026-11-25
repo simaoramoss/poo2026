@@ -7,8 +7,10 @@
 
 using namespace std;
 
+// Constante static: partilhada por todos os motores
 const double Motor::TEMP_AMBIENTE = 20.0;
 
+// Converte o enum do estado em texto (para mostrar no ecra)
 string Texto_Estado(ESTADO_MOTOR e)
 {
     switch (e) {
@@ -29,6 +31,7 @@ string Texto_Classe(CLASSE_TEMP c)
     }
 }
 
+// Construtor: primeiro constroi a parte Dispositivo (pai), depois os atributos do motor
 Motor::Motor(int _id, const string &_marca, double _consumo_hora, double _temp_aviso,
              double _temp_paragem, double _prob_avaria, double _x, double _y)
     : Dispositivo(_id, _marca, _prob_avaria, _x, _y),
@@ -43,6 +46,7 @@ Motor::Motor(int _id, const string &_marca, double _consumo_hora, double _temp_a
 
 Motor::~Motor() {}
 
+// STOP -> START
 bool Motor::Start()
 {
     if (estado != ESTADO_STOP)
@@ -51,6 +55,7 @@ bool Motor::Start()
     return true;
 }
 
+// START -> RUN
 bool Motor::Run()
 {
     if (estado != ESTADO_START)
@@ -59,6 +64,7 @@ bool Motor::Run()
     return true;
 }
 
+// Para e volta a arrancar (nao funciona se estiver avariado)
 bool Motor::Restart()
 {
     if (estado == ESTADO_AVARIADO)
@@ -67,6 +73,7 @@ bool Motor::Restart()
     return Start();
 }
 
+// Qualquer estado -> STOP (um motor avariado precisa de manutencao)
 bool Motor::Stop()
 {
     if (estado == ESTADO_AVARIADO)
@@ -75,6 +82,7 @@ bool Motor::Stop()
     return true;
 }
 
+// Compara a temperatura com os limites do motor e devolve a classe
 CLASSE_TEMP Motor::Estou_Quente() const
 {
     if (temperatura >= temp_paragem)
@@ -84,6 +92,8 @@ CLASSE_TEMP Motor::Estou_Quente() const
     return TEMP_VERDE;
 }
 
+// Escreve uma linha com os dados do motor; Tipo() e virtual, por isso
+// aparece o tipo real (ELETRICO, COMBUSTAO ou INDUCAO)
 void Motor::Mostrar(ostream &f) const
 {
     f << "MOTOR " << Get_ID() << " [" << Tipo() << "] marca=" << Get_Marca()
@@ -96,6 +106,7 @@ void Motor::Mostrar(ostream &f) const
       << " prob_avaria=" << Get_Prob_Avaria();
 }
 
+// Factory: recebe o tipo em texto (vindo do XML) e cria o motor certo
 Motor *Motor::Criar(const string &tipo, int id, const string &marca, double consumo_hora,
                     double temp_aviso, double temp_paragem, double prob_avaria, double x, double y)
 {
@@ -106,7 +117,7 @@ Motor *Motor::Criar(const string &tipo, int id, const string &marca, double cons
         return new MotorCombustao(id, marca, consumo_hora, temp_aviso, temp_paragem, prob_avaria, x, y);
     if (t == "INDUCAO")
         return new MotorInducao(id, marca, consumo_hora, temp_aviso, temp_paragem, prob_avaria, x, y);
-    return NULL;
+    return NULL; // tipo desconhecido
 }
 
 // ---------------------------------------------------------- MotorEletrico
@@ -129,6 +140,7 @@ MotorCombustao::MotorCombustao(int _id, const string &_marca, double _consumo_ho
 
 MotorCombustao::~MotorCombustao() {}
 
+// Override: faz o Start do pai e acrescenta o aquecimento da ignicao
 bool MotorCombustao::Start()
 {
     if (!Motor::Start())
@@ -147,6 +159,7 @@ MotorInducao::MotorInducao(int _id, const string &_marca, double _consumo_hora, 
 
 MotorInducao::~MotorInducao() {}
 
+// Override: faz o Restart do pai e arrefece com ventilacao forcada
 bool MotorInducao::Restart()
 {
     if (!Motor::Restart())
