@@ -12,8 +12,8 @@
  * @class Dispositivo
  * @brief Equipamento instalado numa posicao (X, Y) da fabrica.
  *
- * Reune o que e comum a SENSOR e MOTOR: ID, MARCA, PROBABILIDADE_AVARIA,
- * posicao e contagem de avarias (usada no ranking das marcas).
+ * Reune o que e comum a SENSOR e MOTOR: ID, MARCA, PROBABILIDADE_AVARIA
+ * e posicao.
  */
 class Dispositivo {
     int id;              ///< Identificador do dispositivo.
@@ -21,11 +21,6 @@ class Dispositivo {
     double prob_avaria;  ///< Probabilidade de avaria por hora de funcionamento (0..1).
     double x;            ///< Posicao X na fabrica.
     double y;            ///< Posicao Y na fabrica.
-    int n_avarias;       ///< Numero de avarias ja ocorridas.
-
-protected:
-    /** @brief Regista mais uma avaria. */
-    void Contar_Avaria() { n_avarias++; }
 
 public:
     Dispositivo(int _id, const std::string &_marca, double _prob_avaria, double _x, double _y);
@@ -36,7 +31,6 @@ public:
     double Get_Prob_Avaria() const { return prob_avaria; }
     double Get_X() const { return x; }
     double Get_Y() const { return y; }
-    int Get_N_Avarias() const { return n_avarias; }
 
     /** @brief Distancia euclidiana a outro dispositivo. */
     double Distancia(const Dispositivo &outro) const;

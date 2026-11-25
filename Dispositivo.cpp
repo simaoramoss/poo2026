@@ -9,7 +9,7 @@
 using namespace std;
 
 Dispositivo::Dispositivo(int _id, const string &_marca, double _prob_avaria, double _x, double _y)
-    : id(_id), marca(_marca), prob_avaria(_prob_avaria), x(_x), y(_y), n_avarias(0)
+    : id(_id), marca(_marca), prob_avaria(_prob_avaria), x(_x), y(_y)
 {
     if (prob_avaria < 0.0)
         prob_avaria = 0.0;

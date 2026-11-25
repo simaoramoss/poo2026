@@ -2,7 +2,7 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++11 -Wall -Wextra -pedantic -O2
 OBJS      = main.o Fabrica.o Motor.o Sensor.o Dispositivo.o User.o XML.o Util.o
-LDLIBS    = -pthread
+LDLIBS    =
 
 fabrica: $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(LDLIBS)

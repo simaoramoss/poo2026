@@ -2,15 +2,13 @@
 <!-- Configuracao inicial da fabrica.
      Cada valor pode ser dado como atributo (ID="1") ou como elemento (<ID>1</ID>).
      PROBABILIDADE_AVARIA e por hora de funcionamento. -->
-<FABRICA NOME="Fabrica ESTGV" HORA_ABERTURA="8" HORA_FECHO="19" VIZINHANCA="15" LARGURA="100" ALTURA="60">
+<FABRICA NOME="Fabrica ESTGV" HORA_ABERTURA="8" HORA_FECHO="19">
 
   <TEMPERATURAS>
     <VERDE MIN="0" MAX="70"/>
     <AMARELO MIN="70" MAX="90"/>
     <VERMELHO MIN="90" MAX="150"/>
   </TEMPERATURAS>
-
-  <VIDEOS FUMO="saidas.mp4" LUZ="regresso.mp4" MISSEL="abrigos.mp4"/>
 
   <USERS>
     <USER TIPO="ADMIN" ID="1" NOME="Ana Admin"/>
